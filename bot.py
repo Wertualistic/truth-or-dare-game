@@ -4,6 +4,8 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Con
 from sqlalchemy import create_engine, Column, Integer, String, func
 from sqlalchemy.orm import declarative_base, sessionmaker
 from telegram import BotCommand
+import os
+token = os.getenv("BOT_TOKEN")
 
 # ==================== Database Setup ====================
 Base = declarative_base()
@@ -225,7 +227,7 @@ async def set_bot_commands(application):
 # ==================== Bot Runner ====================
 
 if __name__ == "__main__":
-        app = ApplicationBuilder().token("8155723613:AAGiIuXR9eCqXoULFGEU17vR-S8vKo8nkS0").build()
+        app = ApplicationBuilder().token(token).build()
 
         # Register handlers
         app.add_handler(CommandHandler("start", start))
