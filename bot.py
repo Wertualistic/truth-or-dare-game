@@ -203,9 +203,15 @@ async def set_bot_commands(app):
 
 # ==================== Runner ====================
 if __name__ == "__main__":
+    import asyncio
+    import nest_asyncio
+
+    nest_asyncio.apply()  # 👈 Patch the event loop for Railway/Nixpacks
+
     async def main():
         app = ApplicationBuilder().token(token).build()
 
+        # Register handlers
         app.add_handler(CommandHandler("start", start))
         app.add_handler(CommandHandler("addtruth", add_truth))
         app.add_handler(CommandHandler("adddare", add_dare))
@@ -224,5 +230,5 @@ if __name__ == "__main__":
         print("🤖 Bot is running...")
         await app.run_polling()
 
-    import asyncio
-    asyncio.run(main())
+    asyncio.get_event_loop().run_until_complete(main())
+
